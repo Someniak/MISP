@@ -206,7 +206,7 @@ installEntropyRHEL () {
 # <snippet-begin 1_mispCoreInstall_RHEL8.sh>
 compileLiefRHEL8 () {
   cd $PATH_TO_MISP/app/files/scripts
-  $SUDO_WWW git clone --branch master --single-branch https://github.com/lief-project/LIEF.git lief
+  $SUDO_WWW git clone --branch main --single-branch https://github.com/lief-project/LIEF.git lief
   # lief might need manual compilation
   sudo dnf groupinstall "Development Tools" -y
 
