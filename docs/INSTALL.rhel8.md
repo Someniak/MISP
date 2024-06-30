@@ -277,8 +277,19 @@ installCoreRHEL8 () {
 
   # install python-stix dependencies
   $SUDO_WWW $PATH_TO_MISP/venv/bin/pip install ordered-set python-dateutil six weakrefmethod
+
+
   debug "Install misp-stix"
-  ${SUDO_WWW} ${PATH_TO_MISP}/venv/bin/pip install ${PATH_TO_MISP}/app/files/scripts/misp-stix
+  $SUDO_WWW $PATH_TO_MISP/venv/bin/pip install -U poetry
+  $SUDO_WWW sudo rm -rf ${PATH_TO_MISP}/app/files/scripts/misp-stix
+  $SUDO_WWW git clone https://github.com/MISP/misp-stix.git ${PATH_TO_MISP}/app/files/scripts/misp-stix
+  $SUDO_WWW git submodule update --init
+  $SUDO_WWW poetry install
+
+
+  # ${SUDO_WWW} ${PATH_TO_MISP}/venv/bin/pip install ${PATH_TO_MISP}/app/files/scripts/misp-stix
+
+
 
   # install zmq, redis
   $SUDO_WWW $PATH_TO_MISP/venv/bin/pip install -U zmq redis
