@@ -266,6 +266,8 @@ installCoreRHEL8 () {
   [[ ! -e ${PATH_TO_MISP}/venv ]] && ${SUDO_WWW} python -m venv ${PATH_TO_MISP}/venv
   sudo mkdir /usr/share/httpd/.cache
   sudo chown $WWW_USER:$WWW_USER /usr/share/httpd/.cache
+  sudo -u apache python3.11 -m venv $PATH_TO_MISP/venv
+
   $SUDO_WWW $PATH_TO_MISP/venv/bin/pip install -U pip setuptools
 
   # If you umask is has been changed from the default, it is a good idea to reset it to 0022 before installing python modules
@@ -281,10 +283,8 @@ installCoreRHEL8 () {
 
   debug "Install misp-stix"
   $SUDO_WWW $PATH_TO_MISP/venv/bin/pip install -U poetry
-  $SUDO_WWW sudo rm -rf ${PATH_TO_MISP}/app/files/scripts/misp-stix
-  $SUDO_WWW git clone https://github.com/MISP/misp-stix.git ${PATH_TO_MISP}/app/files/scripts/misp-stix
-  $SUDO_WWW git submodule update --init
-  $SUDO_WWW poetry install
+  cd ${PATH_TO_MISP}/app/files/scripts/misp-stix
+  $SUDO_WWW $PATH_TO_MISP/venv/bin/poetry install
 
 
   # ${SUDO_WWW} ${PATH_TO_MISP}/venv/bin/pip install ${PATH_TO_MISP}/app/files/scripts/misp-stix
